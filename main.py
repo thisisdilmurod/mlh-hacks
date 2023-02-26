@@ -8,6 +8,9 @@ st.set_page_config(
   layout="wide"
 )
 
+# Add an image to the sidebar
+st.sidebar.image("image.png", use_column_width=True)
+
 def load_lottieurl(url):
   r = requests.get(url)
   if r.status_code != 200:
@@ -20,7 +23,7 @@ lottie_coding = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_8P
 # Header section.
 with st.container():
   st.title("Roamstay")
-  st.subheader("Stay with locals, roam free")
+  st.header("Stay with locals, roam free 🌏")
   st.write(
     """
     A platform that allows travelers to connect with welcoming hosts who are willing to share their homes and experiences.
@@ -35,14 +38,14 @@ with st.container():
   st.write("---")
   left_column, right_column = st.columns(2)
   with left_column:
-    st.header("Our mission")
+    st.header("Our mission 🛫")
     st.write(
       """
-      Roamstay's mission is to connect travelers with locals around the world,
+      We aim to connect travelers with locals around the world,
       providing a unique and authentic travel experience while promoting cultural exchange and understanding. 
-      By offering a platform for couch surfing and more, Roamstay aims to break down barriers and create 
+      By offering a platform for couch surfing and more, Roamstay breaks down barriers and create 
       a more open and welcoming global community.\n
-      Through their service, they hope to foster meaningful connections between people from different 
+      Through our service, we hope to foster meaningful connections between people from different 
       cultures and backgrounds, allowing travelers to gain a deeper appreciation and understanding of the places they visit.
       """
     )
@@ -52,13 +55,12 @@ with st.container():
 # Contact section.
 with st.container():
   st.write("---")
-  st.header("Contact us")
+  st.header("Contact us ✉️")
   st.write("##")
 
   left_column, right_column = st.columns(2)
   with left_column:
     st.text_input("Name")
-    st.text_input("Phone")
     st.text_area("Message")
     st.button("Send")
   with right_column:
