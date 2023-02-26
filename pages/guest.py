@@ -1,32 +1,42 @@
 import streamlit as st
 import pandas as pd
 
-st.title("House taker")
+# Define the function to retrieve data by city
+def search_by_city(city):
+    data_list = []
+    with open("contacts.txt", "r") as file:
+        for line in file:
+            data = line.strip().split("\t")
+            if data[2].lower() == city.lower():
+                data_list.append(data)
+    df = pd.DataFrame(data_list, columns=["Name", "Phone", "City", "Info"])
+    return df
 
-st.write("A person who wants to share house, click here.")
+# Define the Streamlit app
+def main():
+    st.title("Guest 🙎‍♂️")
+    st.write(
+        """
+        Roamstay hosts come from a variety of backgrounds and may offer anything from a 
+        spare room to a couch or air mattress in a common area. This allows guests to choose 
+        the type of accommodation that best suits their needs, whether they're looking for a private 
+        space or a more communal experience.
+        """)
+    st.write("---")
 
+    # Create a search box for the city
+    st.subheader("Search 🔎")
+    city = st.text_input("Enter your location:")
 
-# Define the data
-data = pd.DataFrame({
-    'Name': ['Alice', 'Bob', 'Charlie', 'David'],
-    'City': ['National hotel', 'Korean hotel', 'London', 'San Francisco'],
-    'Country': ['Yunusobod', 'Chilonzor', 'Sergeli', ''],
-    'Interests': ['Cooking', 'Hiking', 'Reading', 'Music']
-})
+    # When the user clicks the "Search" button, display the results in a table
+    if st.button("Search"):
+        results = search_by_city(city)
+        if len(results) == 0:
+            st.write("No results found.")
+        else:
+            st.write("---")
+            st.subheader("Available hosts nearby 📍")
+            st.table(results)
 
-# Define the sidebar options
-cities = sorted(data['City'].unique())
-selected_city = st.sidebar.selectbox('Select a city', cities)
-
-countries = sorted(data['Country'].unique())
-selected_country = st.sidebar.selectbox('Select a country', countries)
-
-# Filter the data based on the selected city and country
-filtered_data = data[(data['City'] == selected_city) & (data['Country'] == selected_country)]
-
-# Show the filtered data
-st.write('Couch surfers in {} ({})'.format(selected_city, selected_country))
-st.write(filtered_data)
-
-
-         
+if __name__ == "__main__":
+    main()
