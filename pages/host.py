@@ -5,28 +5,37 @@ import requests
 from streamlit_folium import folium_static
 from streamlit_lottie import st_lottie
 
-st.title("Become a host")
+st.title("Host 👨‍👩‍👦")
+st.write(
+  """
+  As a host on Roamstay, you will have the opportunity to share your home and culture 
+  with guests from around the globe. Hosting can be a rewarding experience that 
+  allows you to meet new people, learn about different customs, and help others to 
+  have a memorable travel experience.
+  """)
 
-def save_contact_info(name, phone, additional_info):
+def save_contact_info(name, phone, address, additional_info):
     # Save the contact information to a file or database
     with open("contacts.txt", "a") as f:
-        f.write("{}\t{}\t{}\t{}\n".format(name, phone, additional_info))
+        f.write("{}\t{}\t{}\t{}\n".format(name, phone, address, additional_info))
 
-def display_contact_info(name, phone, additional_info):
+def display_contact_info(name, phone, address, additional_info):
     # Display the contact information on the page
     st.write("Name:", name)
     st.write("Phone:", phone)
+    st.write("Address:", address)
     st.write("Additional Information:", additional_info)
 
 def main():
-    st.subheader("Information")
+    st.subheader("Details 📂")
     name = st.text_input("Name")
     phone = st.text_input("Phone")
+    city = st.text_input("Address")
     additional_info = st.text_area("Additional Information")
     if st.button("Submit"):
         st.write("---")
-        save_contact_info(name, phone, additional_info)
-        display_contact_info(name, phone, additional_info)
+        save_contact_info(name, phone, city, additional_info)
+        display_contact_info(name, phone, city, additional_info)
 
 def load_lottieurl(url):
   r = requests.get(url)
@@ -47,14 +56,13 @@ with st.container():
     st_lottie(lottie_coding, height=300, key="coding")
 
 
-
 # Create a sample dataframe with latitude and longitude columns
 df = pd.DataFrame({
     'lat': [41.3370, 41.3494, 41.2235, 41.2942, 41.2875, 41.3189, 41.3783, 41.2720],
     'lon': [69.2924, 69.2086, 69.2354, 69.2924, 69.1884, 69.3470, 69.2784, 69.1672]
 })
 
-# Create a Folium map centered on the US
+# Create a Folium map centered on the location
 m = folium.Map(location=[41.3231, 69.2354], zoom_start=10)
 
 # Add markers to the map for each city in the dataframe
@@ -63,7 +71,7 @@ for index, row in df.iterrows():
 
 # Display the map using folium_static()
 st.write("---")
-st.subheader("News")
+st.subheader("Announcements 🚀")
 st.write("""
     There are over thousounds of active hosts nearby, and you're one of them! By encouraging travelers to stay
     with locals, Roamstay hopes to reduce the need for additional accommodation and resources, 
